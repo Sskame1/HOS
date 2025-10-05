@@ -1,4 +1,5 @@
-# HOS - Hentai Operating System
+# This distribution is made exclusively for entertainment purposes.
+## HOS - Hentai Operating System
 
 Custom Linux distribution based on Alpine Linux.
 
