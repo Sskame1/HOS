@@ -1,0 +1,16 @@
+# Build outputs
+output/
+*.iso
+*.img
+
+# Temporary files
+*.tmp
+*.swp
+*.swo
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
