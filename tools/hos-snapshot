@@ -18,3 +18,31 @@ CONFIG_PATHS="
 /etc/passwd
 /etc/group
 "
+
+copy_configs() {
+    echo "Copying configurations to $CONFIG_DIR..."
+    
+    for path in $CONFIG_PATHS; do
+        if [ -e "$path" ]; then\
+            # Create a relative path in Configs
+            relative_path=$(echo "$path" | sed 's/^\///')
+            target_dir="$CONFIG_DIR/$(dirname "$relative_path")"
+            
+            # Create a target directory
+            mkdir -p "$target_dir"
+            
+            # Copy a file or directory
+            if [ -f "$path" ]; then
+                echo "copy file: $path"
+                cp "$path" "$target_dir/"
+            elif [ -d "$path" ]; then
+                echo "copy dir: $path"
+                cp -r "$path" "$target_dir/"
+            fi
+        else
+            echo "WARNING: $path does not exist"
+        fi
+    done
+    
+    echo "Copying completed!"
+}
