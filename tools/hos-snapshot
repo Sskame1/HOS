@@ -1,0 +1,8 @@
+#!/bin/sh
+# HOS Snapshot - Automatic System Configuration Tracker
+
+PROJECT_DIR="/mnt/shared_folder"
+CONFIG_DIR="$PROJECT_DIR/configs"
+
+echo "HOS Snapshot"
+echo "============"
