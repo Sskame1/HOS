@@ -6,3 +6,15 @@ CONFIG_DIR="$PROJECT_DIR/configs"
 
 echo "HOS Snapshot"
 echo "============"
+
+mkdir -p "$CONFIG_DIR"
+
+CONFIG_PATHS="
+/etc/network/interfaces
+/etc/hostname
+/etc/hosts
+/etc/apk/repositories
+/etc/fstab
+/etc/passwd
+/etc/group
+"
