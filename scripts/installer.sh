@@ -28,8 +28,9 @@ hos_install() {
 while true; do
     echo ""
     echo "Select an action:"
-    echo "1 - Copy configurations"
-    echo "2 - exit"
+    echo "1 - tools_install"
+    echo "2 - hos_install"
+    echo "3 - exit"
     echo -n "Your choice [1-2]: "
     
     read choice

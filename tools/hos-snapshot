@@ -1,21 +1,68 @@
 #!/bin/sh
 # HOS Snapshot - Automatic System Configuration Tracker
 
-PROJECT_DIR="/mnt/shared_folder"
+PROJECT_DIR="/mnt/shared_folder/configs"
 ETC_PATHS="
 /etc/apk/repositories
+/etc/motd
+/etc/issue
 "
+
 HOME_PATHS="
 /home/.bashrc
 /home/.profile
 "
 
 echo "HOS Snapshot"
+echo "----=V1=----"
 echo "============"
 
-echo "Copying configurations to $CONFIG_DIR..."
+echo "Copying configurations to $PROJECT_DIR..."
 
+# Copying files from /etc/
 for path in $ETC_PATHS; do
+    # Skipping empty lines
+    [ -z "$path" ] && continue
+    
+    if [ -e "$path" ]; then
+        # Create a destination directory if necessary.
+        dir_path="$PROJECT_DIR$(dirname "$path")"
+        mkdir -p "$dir_path"
+        
+        # Copy each file or directory from the path specified
+        if [ -f "$path" ]; then
+            echo "Copy file: $path"
+            cp "$path" "$dir_path/"
+        elif [ -d "$path" ]; then
+            echo "Copy dir: $path"
+            cp -r "$path" "$dir_path/"
+        fi
+    else
+        echo "WARNING: $path does not exist"
+    fi
+done
+
+# Copying files from the home directory
+for path in $HOME_PATHS; do
+    # Skipping empty lines
+    [ -z "$path" ] && continue
+    
+    if [ -e "$path" ]; then
+        # Create a destination directory if necessary.
+        dir_path="$PROJECT_DIR$(dirname "$path")"
+        mkdir -p "$dir_path"
+        
+        # Copy each file or directory from the path specified
+        if [ -f "$path" ]; then
+            echo "Copy file: $path"
+            cp "$path" "$dir_path/"
+        elif [ -d "$path" ]; then
+            echo "Copy dir: $path"
+            cp -r "$path" "$dir_path/"
+        fi
+    else
+        echo "WARNING: $path does not exist"
+    fi
 done
 
 echo "Copying completed!"
