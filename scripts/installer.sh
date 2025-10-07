@@ -15,6 +15,39 @@ if [ "$(id) -u" -ne 0 ]; then
     exit 1
 fi
 
-# install snapshot
-cp "$HOS_PROJ_DIR/hos-snapshot" "$BIN_DIR"
-chmod +x "$BIN_DIR/tools/hos-snapshot"
+tools_install() {
+    # install snapshot
+    cp "$HOS_PROJ_DIR/hos-snapshot" "$BIN_DIR"
+    chmod +x "$BIN_DIR/tools/hos-snapshot"
+}
+
+hos_install() {
+    #Instal all HOS on Alpine
+}
+
+while true; do
+    echo ""
+    echo "Select an action:"
+    echo "1 - Copy configurations"
+    echo "2 - exit"
+    echo -n "Your choice [1-2]: "
+    
+    read choice
+
+    case $choice in
+        1)
+            tools_install
+            ;;
+        2)
+            hos_install
+            ;;
+        3)
+            echo "Exit..."
+            exit 0
+            ;;
+        *)
+            echo "Wrong choice!"
+            exit 0
+            ;;
+    esac
+done

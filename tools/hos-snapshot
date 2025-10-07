@@ -2,70 +2,20 @@
 # HOS Snapshot - Automatic System Configuration Tracker
 
 PROJECT_DIR="/mnt/shared_folder"
-CONFIG_DIR="$PROJECT_DIR/configs"
-CONFIG_PATHS="
-/etc/network/interfaces
-/etc/hostname
-/etc/hosts
+ETC_PATHS="
 /etc/apk/repositories
-/etc/fstab
-/etc/passwd
-/etc/group
+"
+HOME_PATHS="
+/home/.bashrc
+/home/.profile
 "
 
 echo "HOS Snapshot"
 echo "============"
 
-mkdir -p "$CONFIG_DIR"
+echo "Copying configurations to $CONFIG_DIR..."
 
-copy_configs() {
-    echo "Copying configurations to $CONFIG_DIR..."
-    
-    for path in $CONFIG_PATHS; do
-        if [ -e "$path" ]; then\
-            # Create a relative path in Configs
-            relative_path=$(echo "$path" | sed 's/^\///')
-            target_dir="$CONFIG_DIR/$(dirname "$relative_path")"
-            
-            # Create a target directory
-            mkdir -p "$target_dir"
-            
-            # Copy a file or directory
-            if [ -f "$path" ]; then
-                echo "copy file: $path"
-                cp "$path" "$target_dir/"
-            elif [ -d "$path" ]; then
-                echo "copy dir: $path"
-                cp -r "$path" "$target_dir/"
-            fi
-        else
-            echo "WARNING: $path does not exist"
-        fi
-    done
-    
-    echo "Copying completed!"
-}
-
-while true; do
-    echo ""
-    echo "Select an action:"
-    echo "1 - Copy configurations"
-    echo "2 - exit"
-    echo -n "Your choice [1-2]: "
-    
-    read choice
-    
-    case $choice in
-        1)
-            copy_configs
-            ;;
-        2)
-            echo "Выход..."
-            exit 0
-            ;;
-        *)
-            echo "Wrong choice!"
-            exit 0
-            ;;
-    esac
+for path in $ETC_PATHS; do
 done
+
+echo "Copying completed!"
