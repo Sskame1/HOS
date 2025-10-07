@@ -3,12 +3,6 @@
 
 PROJECT_DIR="/mnt/shared_folder"
 CONFIG_DIR="$PROJECT_DIR/configs"
-
-echo "HOS Snapshot"
-echo "============"
-
-mkdir -p "$CONFIG_DIR"
-
 CONFIG_PATHS="
 /etc/network/interfaces
 /etc/hostname
@@ -18,6 +12,11 @@ CONFIG_PATHS="
 /etc/passwd
 /etc/group
 "
+
+echo "HOS Snapshot"
+echo "============"
+
+mkdir -p "$CONFIG_DIR"
 
 copy_configs() {
     echo "Copying configurations to $CONFIG_DIR..."
@@ -47,35 +46,12 @@ copy_configs() {
     echo "Copying completed!"
 }
 
-show_changes() {
-    echo "Checking for changes..."
-    
-    for path in $CONFIG_PATHS; do
-        if [ -e "$path" ]; then
-            relative_path=$(echo "$path" | sed 's/^\///')
-            backup_path="$CONFIG_DIR/$relative_path"
-            
-            if [ -e "$backup_path" ]; then
-                if diff "$path" "$backup_path" >/dev/null 2>&1; then
-                    echo "+ $path - no changes"
-                else
-                    echo "- $path - CHANGED!"
-                    diff "$path" "$backup_path" | head -10
-                fi
-            else
-                echo "~ $path - new file"
-            fi
-        fi
-    done
-}
-
 while true; do
     echo ""
     echo "Select an action:"
     echo "1 - Copy configurations"
-    echo "2 - Show changes(It doesn't work, if you use it, it will finish working)"
-    echo "3 - exit"
-    echo -n "Your choice [1-3]: "
+    echo "2 - exit"
+    echo -n "Your choice [1-2]: "
     
     read choice
     
@@ -84,15 +60,12 @@ while true; do
             copy_configs
             ;;
         2)
-            # show_changes
-            exit 0
-            ;;
-        3)
             echo "Выход..."
             exit 0
             ;;
         *)
-            echo "Неверный выбор!"
+            echo "Wrong choice!"
+            exit 0
             ;;
     esac
 done
