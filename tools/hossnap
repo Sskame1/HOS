@@ -1,0 +1,36 @@
+#!/bin/sh
+# HOS Snapshot - Automatic System Configuration Tracker
+
+PROJECT_DIR="/mnt/shared/configs"
+PATHS="
+/etc/motd
+/etc/issue
+$HOME/.bashrc
+$HOME/.profile
+"
+
+echo "HOS Snapshot"
+echo "----=V1=----"
+echo "============"
+
+if [ ! -d "$PROJECT_DIR" ]; then 
+    mkdir -p "$PROJECT_DIR"
+    echo "# This file is created because this directory is required for all HOS files." > $PROJECT_DIR/sysfiles-Hos
+    echo "create path $PROJECT_DIR"
+fi
+
+for path in $PATHS; do 
+    if [ -e "$path" ]; then
+        target_dir="$PROJECT_DIR$(dirname "$path")"
+        mkdir -p "$target_dir"
+
+        echo "copy path files and dir: $path"
+        sudo cp -r "$path" "$target_dir/"
+    else
+        echo "WARNING: $path does not exist"
+    fi
+done
+
+
+
+echo "Copying completed!"

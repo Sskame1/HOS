@@ -16,13 +16,21 @@ if [ "$(id) -u" -ne 0 ]; then
 fi
 
 tools_install() {
+    # install all apk
+    sudo apk add squashfs-tools cpio xorriso syslinux wget git vim
+
+    # ====================
+    sudo rm -rf "$BIN_DIR/hossnap"
     # install snapshot
-    cp "$HOS_PROJ_DIR/hos-snapshot" "$BIN_DIR"
-    chmod +x "$BIN_DIR/tools/hos-snapshot"
+    cp "$HOS_PROJ_DIR/tools/hossnap" "$BIN_DIR"
+    chmod +x "$BIN_DIR/hossnap"
+    echo "install"
+    exit 0
 }
 
 hos_install() {
     #Instal all HOS on Alpine
+    echo "not work"
 }
 
 while true; do
