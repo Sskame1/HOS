@@ -1,0 +1,8 @@
+#!/bin/sh
+# first-time startup settings
+
+hostname Hentai-OS
+
+if [ -f /etc/sudoerc ]; then
+	echo "%wheel ALL=(ALL) ALL" >> /etc/sudoerc 2>/dev/null || true
+fi
